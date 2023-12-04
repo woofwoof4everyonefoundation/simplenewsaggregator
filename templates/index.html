@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Aggregator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #header {
+            background-color: #6888BE;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .columns {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+        }
+
+        .column {
+            flex: 1;
+            padding: 10px;
+        }
+
+        #news-container-rto, #news-container-wfh {
+            background-color: #f6f6ef; /* Color template from Hacker News */
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .story {
+            background-color: white;
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>Simple News Aggregator</h1>
+    </div>
+
+    <div class="columns">
+        <div class="column">
+            <h1>RTO (Return to Office)</h1>
+            <div id="news-container-rto">
+                {% for story in news_stories %}
+                    {% if story.status == 'approved' and story.flag == 'RTO' %}
+                        <div class="story">
+                            <h2>{{ story.title }}</h2>
+                            <p>{{ story.description }}</p>
+                            <a href="{{ story.url }}" target="_blank">Read more</a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="column">
+            <h1>WFH (Work from Home)</h1>
+            <div id="news-container-wfh">
+                {% for story in news_stories %}
+                    {% if story.status == 'approved' and story.flag == 'WFH' %}
+                        <div class="story">
+                            <h2>{{ story.title }}</h2>
+                            <p>{{ story.description }}</p>
+                            <a href="{{ story.url }}" target="_blank">Read more</a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <a href="{{ url_for('submit') }}">Submit a Story</a>
+</body>
+</html>
+
